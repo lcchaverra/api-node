@@ -1,0 +1,1 @@
+console.log("archivo index js de la carpeta public funcionando")
