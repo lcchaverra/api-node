@@ -1,7 +1,5 @@
 const {connection, mondb } = require('../connection')
 const User = require("../models/users")
-// const path = require('path')
-// const root = path.join(__dirname, '../public')
 
 // ---------------------------------------------- Users con SQL
 const getAllUser = (req, res) => {
