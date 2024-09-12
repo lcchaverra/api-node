@@ -18,7 +18,7 @@ const getUser = (req, res) => {
     const id = req.params.id
     connection.query(sql, id, (err, result)=>{
         if (err){
-            res.status(404).send({error: `Ha ocurrido un error en el servidor: ${err}`})
+            res.status(404).send({error: `Usuario no encontrado: ${err}`})
         }
         else {
             res.status(200).send(result)
@@ -33,7 +33,7 @@ const createUser = (req, res) => {
     const sql = `insert into users values(${randomId},'${data.username}', '${data.email}', '${data.password}',' ${date.toLocaleDateString} ');`
     connection.query(sql, (err, result) => {
         if (err){
-            res.status(400).send({error: `Ha ocurrido un error en el servidor: ${err}`})
+            res.status(400).send({error: `Ha ocurrido un error, no se ha podido crear el usuario: ${err}`})
         }
         else {
             res.status(201).send({message: 'Usuario creado exitosamente: ', result: result});
@@ -47,7 +47,7 @@ const updateUser = (req, res) => {
     const sql = `UPDATE users SET ? WHERE id = ?`
     connection.query(sql, [newData, id], (err, result) => {
         if (err){
-            res.status(304).send({error: `Ha ocurrido un error en el servidor: ${err}`})
+            res.status(304).send({error: `Ha ocurrido un problema, no se ha podido actualizar el usuario: ${err}`})
         }
         else {
             res.status(200).send({message: 'Usuario actualizado exitosamente: ', result: result});
@@ -60,7 +60,7 @@ const deleteUser = (req, res) => {
     const sql = `Delete from users WHERE id = ?`
     connection.query(sql, id, (err, result) => {
         if (err){
-            res.status(400).send({error: `Ha ocurrido un error en el servidor: ${err}`})
+            res.status(400).send({error: `Ha ocurrido un error, no se ha podido eliminar el usuario: ${err}`})
         }
         else {
             res.status(202).send({message: 'Usuario eliminado exitosamente: ', result: result});
@@ -84,10 +84,10 @@ const getUserMongo = async (req, res) => {
     const userID = req.params.id
     let result = await User.find({_id: userID})
     if (result) {
-        res.status(200).send({message: 'Listado de Usuarios:', data: result})
+        res.status(200).send({message: 'Datos del Usuario:', data: result})
     }
     else {
-        res.status(404).send({ message: 'Ha ocurrido un error al consultar los usuarios:', data: result})
+        res.status(404).send({ message: 'Ha ocurrido un error al consultar el usuarios:', data: result})
     }
 }
 
@@ -121,7 +121,7 @@ const updateUserMongo = async (req, res) => {
         res.status(200).send({message: 'Usuario actualizado exitosamente: ', result: result});
     }
     else {
-        res.status(304).send({error: `Ha ocurrido un error en el servidor: ${err}`})
+        res.status(304).send({error: `Ha ocurrido un error, no se ha podido actualizar el usuario: ${err}`})
     }
     
 }
@@ -134,7 +134,7 @@ const deleteUserMongo = async (req, res) => {
         res.status(202).send({message: 'Usuario eliminado exitosamente: ', result: result});
     }
     else {
-        res.status(400).send({error: `Ha ocurrido un error en el servidor: ${err}`})
+        res.status(400).send({error: `Ha ocurrido un error, no se ha podido eliminar el usuario: ${err}`})
     }
 }
 
