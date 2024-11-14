@@ -1,77 +1,60 @@
 const {connection, mondb } = require('../connection')
-const User = require("../models/users")
+const User = require("../models/users/userModel");
+const userService = require("../../services/users/userService");
 
 // ---------------------------------------------- Users con SQL
-const getAllUser = (req, res) => {
-    const sql = 'select * from users'
-    connection.query(sql, (err, result)=>{
-        if (err){
-            res.status(400).send({error: `Ha ocurrido un error en el servidor: ${err}`})
-        }
-        else {
-            res.status(200).send(result)
-        }
-    })
+const getAllUser = async (req, res) => {
+    try {
+        const users = await userService.getAllUser()
+        res.status(200).json(users)
+    } catch (err){
+        res.status(400).json({error: `Ha ocurrido un error en el servidor: ${err}`})
+    }
 }
-const getUser = (req, res) => {
-    const sql = 'select * from users where id = ?'
-    const id = req.params.id
-    connection.query(sql, id, (err, result)=>{
-        if (err){
-            res.status(404).send({error: `Usuario no encontrado: ${err}`})
-        }
-        else {
-            res.status(200).send(result)
-        }
-    })
+const getUser = async (req, res) => {
+    try {
+        const user = await userService.getUser(req.params.id)
+        if (!user) return res.status(404).send({error: `El usuario con id ${req.params.id} no existe`})
+        res.status(200).json(user)
+    } catch (err){
+        res.status(400).json({error: `Ha ocurrido un error al obtener el usuario: ${err}`})
+    }
 }
 
-const createUser = (req, res) => {
-    const randomId = Math.floor(Math.random() * 1000)
-    let date = new Date();
-    const data = req.body
-    const sql = `insert into users values(${randomId},'${data.username}', '${data.email}', '${data.password}',' ${date.toLocaleDateString} ');`
-    connection.query(sql, (err, result) => {
-        if (err){
-            res.status(400).send({error: `Ha ocurrido un error, no se ha podido crear el usuario: ${err}`})
-        }
-        else {
-            res.status(201).send({message: 'Usuario creado exitosamente: ', result: result});
-        }
-    })
+const createUser = async (req, res) => {
+    try {
+        const newUser = await userService.createUser(req.body)
+        res.status(201).json({ message: 'Usuario creado exitosamente', data: newUser });
+    }
+    catch (err){
+        res.status(400).json({error: `Ha ocurrido un error al crear el usuario: ${err}`})
+    }
 }
 
-const updateUser = (req, res) => {
-    const id = req.params.id
-    const newData = req.body
-    const sql = `UPDATE users SET ? WHERE id = ?`
-    connection.query(sql, [newData, id], (err, result) => {
-        if (err){
-            res.status(304).send({error: `Ha ocurrido un problema, no se ha podido actualizar el usuario: ${err}`})
-        }
-        else {
-            res.status(200).send({message: 'Usuario actualizado exitosamente: ', result: result});
-        }
-    })
+
+const updateUser = async(req, res) => {
+    try {
+        const updateUser = await userService.updateUser(req.params.id, req.body)
+        res.status(200).json({ message: 'Usuario actualizado exitosamente', data: updateUser });
+    }
+    catch (err){
+        res.status(400).json({error: `Ha ocurrido un error al actualizar el usuario: ${err}`})
+    }
 }
 
-const deleteUser = (req, res) => {
-    const id = req.params.id
-    const sql = `Delete from users WHERE id = ?`
-    connection.query(sql, id, (err, result) => {
-        if (err){
-            res.status(400).send({error: `Ha ocurrido un error, no se ha podido eliminar el usuario: ${err}`})
-        }
-        else {
-            res.status(202).send({message: 'Usuario eliminado exitosamente: ', result: result});
-        }
-    })
+const deleteUser = async(req, res) => {
+    try {
+        await userService.deleteUser(req.params.id)
+        res.status(202).json({ message: 'Usuario eliminado exitosamente' });
+    }
+    catch (err){
+        res.status(400).json({error: `Ha ocurrido un error al eliminar el usuario: ${err}`})
+    }
 }
 
 // ----------------------------------------------------Users con MongoDB
 const getAllUserMongo = async (req, res) => {
     let result = await User.find({})
-
     if (result) {
         res.status(200).send({message: 'Listado de Usuarios:', data: result})
     }

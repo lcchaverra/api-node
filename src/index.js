@@ -1,21 +1,21 @@
 const express = require("express");
 const app = express();
 require('dotenv').config()
-const users = require("./routes/users");
+const users = require("./routes/users/userRoutes");
 const port = process.env.PORT || 3000;
+const cors = require('cors')
 
-app.use(express.json())
+//middlweares geenrales
+app.use(cors);
+app.use(express.json());
 
-app.get('/', (req, res) =>  {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const dateFormated = `${day}.${month}.${year}`
-    res.send(`Api version 0.1 - ${dateFormated}`);
-})
-
+//Rutas principales
 app.use('/users',users)
+
+//Ruta base
+app.get('/', (req, res) =>  {
+    res.send(`Api version 0.1 - ${new Date().toDateString()}`);
+})
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
