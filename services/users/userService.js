@@ -33,7 +33,7 @@ const createUser = (userData) => {
     return new Promise((resolve, reject) => {
         const { name, email, password, category, rol } = userData;
         const sql = 'INSERT INTO users (name, email, password, category, rol,) VALUES (?, ?, ?, ?, ?)';
-        sqlConnection.query(sql, [name, email, password, category, rol], (err, result) => {
+        connection.query(sql, [name, email, password, category, rol], (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -46,7 +46,7 @@ const createUser = (userData) => {
 const updateUser = (id, userData) => {
     return new Promise((resolve, reject) => {
         const sql = 'UPDATE users SET ? WHERE id = ?';
-        sqlConnection.query(sql, [userData, id], (err, result) => {
+        connection.query(sql, [userData, id], (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -59,7 +59,7 @@ const updateUser = (id, userData) => {
 const deleteUser = (id) => {
     return new Promise((resolve, reject) => {
         const sql = 'DELETE FROM users WHERE id = ?';
-        sqlConnection.query(sql, [id], (err, result) => {
+        connection.query(sql, [id], (err, result) => {
             if (err) {
                 reject(err);
             } else {

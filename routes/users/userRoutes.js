@@ -110,7 +110,7 @@ router.get('/:id', usersController.getUser)
  *               password:
  *                 type: string
  *                 description: contraseña del usuario
- *               categoria:
+ *               category:
  *                 type: string
  *                 description: Categoría del usuario
  *               rol:
@@ -161,7 +161,7 @@ router.post('/', usersController.createUser)
  *               password:
  *                 type: string
  *                 description: contraseña del usuario
- *               categoria:
+ *               category:
  *                 type: string
  *                 description: Categoría del usuario
  *               rol:
