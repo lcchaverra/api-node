@@ -1,4 +1,5 @@
 const {connection } = require('../../connection')
+const bcrypt = require('bcrypt')
 
 const getAllUser = () => {
     return new Promise ((resolve, reject) => {
@@ -32,8 +33,9 @@ const getUser = (id) => {
 const createUser = (userData) => {
     return new Promise((resolve, reject) => {
         const { name, email, password, category, rol } = userData;
+        const hashedPassword = bcrypt.hash(password, 10);
         const sql = 'INSERT INTO users (name, email, password, category, rol,) VALUES (?, ?, ?, ?, ?)';
-        connection.query(sql, [name, email, password, category, rol], (err, result) => {
+        connection.query(sql, [name, email, hashedPassword, category, rol], (err, result) => {
             if (err) {
                 reject(err);
             } else {
@@ -69,4 +71,18 @@ const deleteUser = (id) => {
     });
 };
 
-module.exports = { getAllUser, getUser, createUser, updateUser, deleteUser };
+const loguinUser = (username) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'select * from users where name = ?'
+        connection.query(sql, [username], (err, result)=>{
+            if (err){
+                reject(err)
+            }
+            else {
+                resolve(result[0])
+            }
+        })
+    });
+};
+
+module.exports = { getAllUser, getUser, createUser, updateUser, deleteUser, loguinUser };
