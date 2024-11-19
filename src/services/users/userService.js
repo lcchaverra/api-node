@@ -1,5 +1,4 @@
-const {connection, mondb } = require('../connection')
-const User = require("../models/users/userModel");
+const {connection } = require('../../connection')
 
 const getAllUser = () => {
     return new Promise ((resolve, reject) => {
@@ -32,9 +31,9 @@ const getUser = (id) => {
 
 const createUser = (userData) => {
     return new Promise((resolve, reject) => {
-        const { username, email, password } = userData;
-        const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-        sqlConnection.query(sql, [username, email, password], (err, result) => {
+        const { name, email, password, category, rol } = userData;
+        const sql = 'INSERT INTO users (name, email, password, category, rol,) VALUES (?, ?, ?, ?, ?)';
+        sqlConnection.query(sql, [name, email, password, category, rol], (err, result) => {
             if (err) {
                 reject(err);
             } else {
