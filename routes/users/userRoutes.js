@@ -211,7 +211,7 @@ router.delete('/:id', usersController.deleteUser)
 /**
  * @swagger
  * /api/users/login:
- *   get:
+ *   post:
  *     summary: Obtiene un usuario y verifica que este esté registrado en el sistema para permitirle el acceso
  *     tags: [users]
  *     parameters:
@@ -244,7 +244,7 @@ router.delete('/:id', usersController.deleteUser)
  *       404:
  *         description: Usuario no encontrado
  */
-router.get('/login', usersController.logUser)
+router.post('/login', usersController.logUser)
 
 //ejemplo de ruta protegida
 // router.get('/all', authMiddleware, usersController.getAllUser)
