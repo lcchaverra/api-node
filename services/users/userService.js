@@ -30,19 +30,27 @@ const getUser = (id) => {
     })
 }
 
-const createUser = (userData) => {
-    return new Promise((resolve, reject) => {
+const createUser = async (userData) => {
+    // return new Promise((resolve, reject) => {
         const { name, email, password, category, rol } = userData;
-        const hashedPassword = bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const sql = 'INSERT INTO users (name, email, password, category, rol,) VALUES (?, ?, ?, ?, ?)';
-        connection.query(sql, [name, email, hashedPassword, category, rol], (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        });
-    });
+        try {
+            const result = await connection.query(sql, [name, email, hashedPassword, category, rol]);
+            return result;
+        } catch (error) {
+            return error
+        }
+        // connection.query(sql, [name, email, hashedPassword, category, rol], (err, result) => {
+        //     if (err) {
+        //         // reject(err);
+        //         return err
+        //     } else {
+        //         // resolve(result);
+        //         return result
+        //     }
+        // });
+    // });
 };
 
 const updateUser = (id, userData) => {

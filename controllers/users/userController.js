@@ -1,6 +1,6 @@
 const userService = require("../../services/users/userService");
 const {generateToken} = require('../../utils/jwt');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 // ---------------------------------------------- Users con SQL
 const getAllUser = async (req, res) => {
     try {
@@ -23,6 +23,7 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         const newUser = await userService.createUser(req.body)
+        if (!newUser) return res.status(400).send({error: `Ha ocurrido un error al crear el usuario`})
         res.status(201).json({ message: 'Usuario creado exitosamente', data: newUser });
     }
     catch (err){
