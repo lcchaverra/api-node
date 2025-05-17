@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "lib": ["es2018", "esnext.asynciterable"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "strictPropertyInitialization": false,  // Importante para las entidades de TypeORM
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,         // Necesario para decoradores
+    "emitDecoratorMetadata": true,          // Necesario para decoradores
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

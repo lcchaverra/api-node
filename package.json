@@ -2,27 +2,44 @@
   "name": "api-node",
   "version": "1.0.0",
   "description": "Api realizada en node js",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon index.js"
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "npx tsc"
   },
   "author": "Luis Carlos Chaverra",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.18",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.9",
-    "express": "^4.19.2",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.2",
     "mysql": "^2.18.1",
+    "mysql2": "^3.14.1",
+    "npm": "^11.4.0",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "^6.37.7",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typeorm": "^0.3.24"
   }
 }
