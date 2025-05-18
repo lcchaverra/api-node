@@ -51,6 +51,21 @@ export class UserService {
     return this.mapToResponseDto(user);
   }
 
+
+  async findByEmail(email: string): Promise<any> {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      return null;
+    }
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      active: user.active
+    };
+  }
+
   async updateUser(id: number, userData: UpdateUserDto): Promise<UserResponseDto> {
     const user = await this.userRepository.findById(id);
     if (!user) {

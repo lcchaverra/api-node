@@ -1,5 +1,10 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
+import { authenticate } from '../../../api/middlewares/auth.middleware';
+
+// Nota para mi yo del futuro que toque este codigo, necesito proteger las rutas de los usuarios con el token con el middleware
+// por ejemplo:
+// router.get('/', authenticate, userController.getAllUsers);
 
 const router = Router();
 const userController = new UserController();
