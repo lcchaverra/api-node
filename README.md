@@ -34,7 +34,7 @@ Una API RESTful escalable y bien estructurada construida con Node.js, Express y 
 2. Instalar dependencias
     ```
     npm install
-    ``
+    ```
 
 3. Configurar las variables de entorno
     renombra .env.example a .env y reemplaza los datos por los tuyos
