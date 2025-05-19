@@ -1,10 +1,11 @@
 // src/modules/auth/services/auth.service.ts
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { UserService } from '../../users/services/user.service';
 import { RegisterDto, LoginDto, AuthResponseDto } from '../dto/auth.dto';
 import { UserResponseDto } from '../../users/dto/user.dto';
 import { AppError } from '../../../shared/utils/app-error';
+import { access } from 'fs';
 
 export class AuthService {
     private userService: UserService;
@@ -39,9 +40,10 @@ export class AuthService {
         };
         } catch (error) {
         if (error instanceof AppError) {
+            // console.error('Error al registrar usuario:', error.message);
             throw error;
         }
-        throw new AppError('Error al registrar usuario', 500);
+        throw new AppError('Error al registrar usuario:' + error, 500);
         }
     }
 
@@ -96,17 +98,18 @@ export class AuthService {
     }
 
     private generateTokens(userId: number, email: string): { token: string; refreshToken: string } {
-        const token = jwt.sign(
-        { id: userId, email },
-        this.jwtSecret,
-        { expiresIn: this.tokenExpiration }
-        );
+        const payload = { id: userId, email };
+
+        const accessTokenOptions: SignOptions = {
+            expiresIn: this.tokenExpiration as SignOptions['expiresIn']
+        };
+
+        const refreshTokenOptions: SignOptions = {
+            expiresIn: this.refreshTokenExpiration as SignOptions['expiresIn']
+        };
         
-        const refreshToken = jwt.sign(
-        { id: userId, email },
-        this.jwtRefreshSecret,
-        { expiresIn: this.refreshTokenExpiration }
-        );
+        const token = jwt.sign( payload, this.jwtSecret, accessTokenOptions);
+        const refreshToken = jwt.sign( payload, this.jwtRefreshSecret, refreshTokenOptions );
         
         return { token, refreshToken };
     }
