@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      - PORT=${PORT:-8000}
+      - DB_HOST=${DB_HOST:-example.com}
+      - DB_USER=${DB_USER:-example}
+      - MYSQL_PASS=${MYSQL_PASS:-example}
+      - DB_PASS=${DB_PASS:-example}
+      - JWT_SECRET=${JWT_SECRET:-example}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-example}
+      - JWT_EXPIRATION=${JWT_EXPIRATION:-1h}
+      - JWT_REFRESH_EXPIRATION=${JWT_REFRESH_EXPIRATION:-7d}
+      - NODE_ENV=${NODE_ENV:-production}
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
