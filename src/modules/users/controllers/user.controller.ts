@@ -75,7 +75,11 @@ export class UserController {
       }
 
       await this.userService.deleteUser(id);
-      res.status(204).send();
+      res.status(200).send({
+        status: 'success',
+        data: null,
+        message: 'Usuario eliminado correctamente'
+      });
     } catch (error) {
       next(error);
     }
