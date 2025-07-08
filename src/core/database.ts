@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import { User } from '../modules/users/entities/user.entity';
-// Importa más entidades según necesites
 
 import dotenv from "dotenv";
 
@@ -15,7 +14,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || 'my_api',
     synchronize: process.env.NODE_ENV !== 'production', // Solo para desarrollo
     logging: process.env.NODE_ENV !== 'production',
-    entities: [User], // Agrega tus entidades aquí
+    entities: [User],
     migrations: ['src/migrations/**/*.ts'],
     subscribers: [],
     driver: require('mysql2'),

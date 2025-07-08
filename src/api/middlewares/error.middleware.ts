@@ -17,7 +17,6 @@ export const errorHandler = (
     return;
   }
 
-  // Error no controlado
   res.status(500).json({
     status: 'error',
     message: 'Error interno del servidor'
