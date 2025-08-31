@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { errorHandler } from '../api/middlewares/error.middleware';
 import routes from '../api/routes';
+import { apiLimiter, authLimiter, publicLimiter } from '../api/middlewares/rateLimit.middleware';
 
 export class Server {
   private app: Application;
@@ -47,7 +48,7 @@ export class Server {
   }
 
   routes(): void {
-    this.app.use('/api', routes);
+    this.app.use('/api', publicLimiter, routes);
   }
 
   errorHandling(): void {
