@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { User } from '../modules/users/entities/user.entity';
-
+import { Rol } from '../modules/roles/entities/roles.entity';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,7 +14,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || 'my_api',
     synchronize: process.env.NODE_ENV !== 'production', // Solo para desarrollo
     logging: process.env.NODE_ENV !== 'production',
-    entities: [User],
+    entities: [User, Rol],
     migrations: ['src/migrations/**/*.ts'],
     subscribers: [],
     driver: require('mysql2'),
