@@ -2,6 +2,7 @@ export interface CreateUserDto {
   name: string;
   email: string;
   password: string;
+  rol?: number;
 }
 
 export interface UpdateUserDto {
@@ -9,6 +10,7 @@ export interface UpdateUserDto {
   email?: string;
   password?: string;
   active?: boolean;
+  rol?: number;
 }
 
 export interface UserResponseDto {
@@ -16,5 +18,6 @@ export interface UserResponseDto {
   name: string;
   email: string;
   active: boolean;
+  rol: number;
   createdAt: Date;
 }

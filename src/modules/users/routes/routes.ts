@@ -60,6 +60,8 @@ router.get('/:id', userController.getUserById);
  *                 type: string
  *               password:
  *                 type: string
+ *               rol:
+ *                  type: number
  *     responses:
  *       201:
  *         description: Usuario creado
@@ -90,6 +92,8 @@ router.post('/', userController.createUser);
  *                 type: string
  *               password:
  *                 type: string
+ *               rol:
+ *                  type: number
  *     responses:
  *       200:
  *         description: Usuario actualizado

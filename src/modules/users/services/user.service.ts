@@ -16,6 +16,7 @@ export class UserService {
       name: user.name,
       email: user.email,
       active: user.active,
+      rol: user.rol,
       createdAt: user.createdAt
     };
   }
